@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     implementation("net.minestom:minestom-snapshots:7320437640")
+    implementation("net.kyori:adventure-text-minimessage:4.16.0")
 }
 
 kotlin {

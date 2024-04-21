@@ -1,19 +1,20 @@
-package net.invoice
+package org.invoice
 
+import net.kyori.adventure.text.Component
 import net.minestom.server.MinecraftServer
-import net.minestom.server.coordinate.Pos
-import net.minestom.server.entity.GameMode
+import net.minestom.server.adventure.MinestomAdventure
 import net.minestom.server.event.GlobalEventHandler
-import net.minestom.server.event.player.AsyncPlayerConfigurationEvent
 import net.minestom.server.extras.MojangAuth
 import net.minestom.server.instance.InstanceContainer
 import net.minestom.server.instance.InstanceManager
 import net.minestom.server.instance.block.Block
 import net.minestom.server.utils.NamespaceID
 import net.minestom.server.world.DimensionType
+import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
+import java.util.function.BiFunction
 
 class InvoiceServer(val minecraftServer: MinecraftServer) {
     var instanceManager: InstanceManager = MinecraftServer.getInstanceManager()
@@ -36,16 +37,6 @@ class InvoiceServer(val minecraftServer: MinecraftServer) {
 
         instanceContainer.setGenerator { unit ->
             unit.modifier().fillHeight(0, 40, Block.GRASS_BLOCK)
-        }
-    }
-
-    fun setupJoin() {
-        eventHandler.addListener(AsyncPlayerConfigurationEvent::class.java) { event ->
-            val player = event.player
-            event.spawningInstance = instanceContainer
-
-            player.respawnPoint = Pos(0.0, 42.0, 0.0)
-            player.gameMode = GameMode.CREATIVE // Just for Testing
         }
     }
 
