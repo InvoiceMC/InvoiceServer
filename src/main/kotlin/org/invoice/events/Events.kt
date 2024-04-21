@@ -20,7 +20,7 @@ import kotlin.time.toDuration
 
 
 class Events(instanceContainer: InstanceContainer) {
-    private val LAST_TICK: AtomicReference<TickMonitor> = AtomicReference()
+    val LAST_TICK: AtomicReference<TickMonitor> = AtomicReference()
     private val BREAKABLE_BLOCKS: List<Block> = listOf(
         Block.COBBLESTONE,
         Block.COAL_ORE
