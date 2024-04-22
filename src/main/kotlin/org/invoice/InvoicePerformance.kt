@@ -2,6 +2,7 @@ package org.invoice
 
 import net.kyori.adventure.text.Component
 import net.minestom.server.MinecraftServer
+import net.minestom.server.ServerFlag
 import net.minestom.server.adventure.audience.Audiences
 import net.minestom.server.event.server.ServerTickMonitorEvent
 import net.minestom.server.monitoring.TickMonitor
@@ -43,7 +44,7 @@ class InvoicePerformance {
             ramPercentage = ramUsage.toFloat() / ramMax.toFloat() * 100f
 
             MONITOR.get()?.let {
-                tps = min(MinecraftServer.TICK_PER_SECOND.toDouble(), floor(1000.0 / it.tickTime))
+                tps = min(ServerFlag.SERVER_TICKS_PER_SECOND.toDouble(), floor(1000.0 / it.tickTime))
                 tickTime = MathUtils.round(it.tickTime, 2)
                     .toDuration(DurationUnit.MILLISECONDS)
 
