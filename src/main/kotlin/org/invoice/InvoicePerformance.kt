@@ -17,7 +17,7 @@ import kotlin.time.toDuration
 class InvoicePerformance {
     private val benchmarkFormat: String = "<gray>ʀᴀᴍ: <white>%sMB/%sMB (%s) <dark_gray><b>|<reset> <gray>ᴛᴘꜱ: <white>%s <dark_gray><b>|<reset> <gray>ᴛɪᴄᴋ ᴛɪᴍᴇ: <white>%s"
     private val lowTPSThreshold: Double = 15.5
-    
+
     val MONITOR: AtomicReference<TickMonitor> = AtomicReference()
 
     var ramUsage: Long = 0
