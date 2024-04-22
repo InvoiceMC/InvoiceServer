@@ -62,7 +62,7 @@ class InvoiceServer(private val minecraftServer: MinecraftServer) {
         chunkSavingThread.scheduleAtFixedRate({ instanceContainer.saveChunksToStorage() }, 20, 20, TimeUnit.SECONDS)
 
         instanceContainer.setGenerator { unit ->
-            unit.modifier().fillHeight(0, 40, Block.GRASS_BLOCK)
+            unit.modifier().fillHeight(39, 40, Block.STONE)
         }
 
         setupCommands()
