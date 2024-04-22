@@ -8,12 +8,14 @@ lateinit var server: InvoiceServer
 
 @Throws(IOException::class)
 fun main() {
+    // Create server object
     val minecraftServer = MinecraftServer.init()
     server = InvoiceServer(minecraftServer)
     server.start()
 
-    val events = Events(server.instanceContainer)
-    events.init(server.eventHandler)
+    // Register all default events
+    Events()
 
+    // Register all plugins
     server.pluginManager.registerAllPlugins()
 }

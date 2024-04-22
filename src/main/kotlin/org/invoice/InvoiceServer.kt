@@ -14,17 +14,20 @@ import net.minestom.server.utils.NamespaceID
 import net.minestom.server.world.DimensionType
 import org.invoice.commands.admin.GamemodeCMD
 import org.invoice.commands.admin.PickaxeCMD
+import org.invoice.commands.play.PluginsCMD
 import org.invoice.commands.play.TestingCMD
 import org.invoice.plugins.PluginManager
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
-class InvoiceServer(val minecraftServer: MinecraftServer) {
+class InvoiceServer(private val minecraftServer: MinecraftServer) {
     var instanceManager: InstanceManager = MinecraftServer.getInstanceManager()
     var eventHandler: GlobalEventHandler = MinecraftServer.getGlobalEventHandler()
     val teamManager: TeamManager = MinecraftServer.getTeamManager()
+
     val pluginManager: PluginManager = PluginManager()
+    val performanceManager: InvoicePerformance = InvoicePerformance()
 
     var instanceContainer: InstanceContainer
 
@@ -40,6 +43,7 @@ class InvoiceServer(val minecraftServer: MinecraftServer) {
 
         MinecraftServer.getDimensionTypeManager().addDimension(dimension)
         instanceContainer = instanceManager.createInstanceContainer(dimension)
+        performanceManager.setup(this, true)
 
         chunkSavingThread.scheduleAtFixedRate({ instanceContainer.saveChunksToStorage() }, 20, 20, TimeUnit.SECONDS)
 
@@ -60,6 +64,7 @@ class InvoiceServer(val minecraftServer: MinecraftServer) {
             PickaxeCMD(),
 
             // Play
+            PluginsCMD(),
             TestingCMD()
         )
     }

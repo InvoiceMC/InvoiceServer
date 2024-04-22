@@ -27,6 +27,8 @@ class PluginManager {
         val pluginInstance = plugin.getConstructor().newInstance() // Which means I have to do this :(
 
         pluginInstance.onEnable()
+        loadedPlugins.add(pluginInstance)
+
         return pluginInstance
     }
 
