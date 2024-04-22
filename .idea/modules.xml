@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/InvoiceServer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/InvoiceServer.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/InvoiceServer.test.iml" filepath="$PROJECT_DIR$/.idea/modules/InvoiceServer.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.github.invoicemc.InvoiceServer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/org.github.invoicemc.InvoiceServer.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.github.invoicemc.InvoiceServer.test.iml" filepath="$PROJECT_DIR$/.idea/modules/org.github.invoicemc.InvoiceServer.test.iml" />
     </modules>
   </component>
 </project>
