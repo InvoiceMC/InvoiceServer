@@ -14,19 +14,20 @@ class PluginManager {
 
         files.forEach { file ->
             val plugin = loadPlugin(file)
-            println("Registered plugin: ${plugin.name}!")
+            println("Registered plugin: ${plugin?.name}!")
         }
     }
 
     @Throws(IOException::class)
-    private fun loadPlugin(file: File): Plugin {
+    @Suppress("UNCHECKED_CAST")
+    private fun loadPlugin(file: File): Plugin? {
         val classLoader = PluginClassLoader.create(file)
-        val classes = classLoader.registerAllClasses()
+        val plugin = classLoader.registerAllClasses()
+            .first { clazz -> clazz.javaClass.isInstance(Plugin::class.java) } as Class<out Plugin> // Had to do this because List#filterIsInstance didn't work for some reason :shrug:=
+        val pluginInstance = plugin.getConstructor().newInstance() // Which means I have to do this :(
 
-        val plugin = classes.filterIsInstance<Plugin>().first()
-        plugin.onEnable()
-
-        return plugin
+        pluginInstance.onEnable()
+        return pluginInstance
     }
 
     fun loadPlugin(plugin: Plugin) {
