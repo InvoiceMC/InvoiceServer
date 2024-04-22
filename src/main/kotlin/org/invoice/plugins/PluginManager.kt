@@ -1,9 +1,14 @@
 package org.invoice.plugins
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.io.File
 import java.io.IOException
+import kotlin.time.measureTime
 
 class PluginManager {
+    private val logger: Logger = LoggerFactory.getLogger(PluginManager::class.java)
+
     internal val loadedPlugins: MutableList<Plugin> = ArrayList()
     internal val disabledPlugins: MutableList<Plugin> = ArrayList()
 
@@ -14,8 +19,14 @@ class PluginManager {
 
         files?.let {
             it.forEach { file ->
-                val plugin = loadPlugin(file)
-                println("Registered plugin: ${plugin?.name}!")
+                var plugin: Plugin?
+                val time = measureTime {
+                    plugin = loadPlugin(file)
+                }
+
+                plugin?.let {
+                    logger.info("Successfully registered plugin `${plugin!!.name}` in $time")
+                }
             }
         }
     }

@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.logger.slf4j.ComponentLogger
 import net.minestom.server.MinecraftServer
 import net.minestom.server.adventure.audience.Audiences
 import net.minestom.server.command.CommandManager
@@ -23,6 +24,8 @@ import org.invoice.commands.admin.PickaxeCMD
 import org.invoice.commands.play.PluginsCMD
 import org.invoice.commands.play.TestingCMD
 import org.invoice.plugins.PluginManager
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.io.InputStream
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -30,6 +33,8 @@ import java.util.concurrent.TimeUnit
 import java.util.function.Predicate
 
 class InvoiceServer(private val minecraftServer: MinecraftServer) {
+    private val logger: Logger = LoggerFactory.getLogger(MinecraftServer::class.java)
+
     var instanceManager: InstanceManager = MinecraftServer.getInstanceManager()
     var eventHandler: GlobalEventHandler = MinecraftServer.getGlobalEventHandler()
     val teamManager: TeamManager = MinecraftServer.getTeamManager()
@@ -76,6 +81,8 @@ class InvoiceServer(private val minecraftServer: MinecraftServer) {
             PluginsCMD(),
             TestingCMD()
         )
+
+        logger.info("Successfully registered all Commands!")
     }
 
     private fun setupTeams() {
@@ -83,6 +90,8 @@ class InvoiceServer(private val minecraftServer: MinecraftServer) {
             .collisionRule(TeamsPacket.CollisionRule.NEVER)
             .nameTagVisibility(TeamsPacket.NameTagVisibility.NEVER)
             .build()
+
+        logger.info("Successfully registered main team!")
     }
 
     fun getResource(resource: String): String {
