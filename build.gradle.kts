@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
     kotlin("jvm") version "2.0.0-RC1"
@@ -30,7 +32,7 @@ publishing {
 
             from(components["java"])
             artifact(tasks.shadowJar) {
-                classifier = null
+                classifier = "all"
             }
         }
     }
