@@ -12,9 +12,9 @@ import net.minestom.server.network.packet.server.play.TeamsPacket
 import net.minestom.server.scoreboard.TeamManager
 import net.minestom.server.utils.NamespaceID
 import net.minestom.server.world.DimensionType
+import org.invoice.commands.admin.GamemodeCMD
 import org.invoice.commands.admin.PickaxeCMD
 import org.invoice.commands.play.TestingCMD
-import org.invoice.commands.admin.GamemodeCMD
 import org.invoice.plugins.PluginManager
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService

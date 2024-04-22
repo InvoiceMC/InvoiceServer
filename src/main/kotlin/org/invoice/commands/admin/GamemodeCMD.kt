@@ -1,7 +1,5 @@
 package org.invoice.commands.admin
 
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.command.builder.Command
 import net.minestom.server.command.builder.arguments.ArgumentEnum
 import net.minestom.server.command.builder.arguments.ArgumentType
@@ -10,7 +8,6 @@ import net.minestom.server.entity.GameMode
 import net.minestom.server.entity.Player
 import net.minestom.server.utils.entity.EntityFinder
 import org.invoice.mm
-import java.util.*
 
 
 class GamemodeCMD : Command("gamemode", "gm") {

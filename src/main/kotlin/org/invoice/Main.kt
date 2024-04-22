@@ -1,11 +1,8 @@
 package org.invoice
 
 import net.minestom.server.MinecraftServer
-import net.minestom.server.collision.BoundingBox
 import org.invoice.events.Events
-import org.invoice.plugins.PluginManager
 import java.io.IOException
-import kotlin.jvm.Throws
 
 lateinit var server: InvoiceServer
 
