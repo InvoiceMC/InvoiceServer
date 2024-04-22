@@ -3,9 +3,12 @@ package org.invoice
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
+import net.kyori.adventure.text.Component
 import net.minestom.server.MinecraftServer
+import net.minestom.server.adventure.audience.Audiences
 import net.minestom.server.command.CommandManager
 import net.minestom.server.command.builder.Command
+import net.minestom.server.entity.Player
 import net.minestom.server.event.GlobalEventHandler
 import net.minestom.server.extras.MojangAuth
 import net.minestom.server.instance.InstanceContainer
@@ -21,12 +24,10 @@ import org.invoice.commands.play.PluginsCMD
 import org.invoice.commands.play.TestingCMD
 import org.invoice.plugins.PluginManager
 import java.io.InputStream
-import java.io.InputStreamReader
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.contract
+import java.util.function.Predicate
 
 class InvoiceServer(private val minecraftServer: MinecraftServer) {
     var instanceManager: InstanceManager = MinecraftServer.getInstanceManager()
@@ -91,6 +92,9 @@ class InvoiceServer(private val minecraftServer: MinecraftServer) {
 
     fun getResourceAsStream(resource: String): InputStream? = javaClass.getResourceAsStream("/$resource")
     fun getResourceAsJson(resource: String): JsonObject = gson.fromJson(getResource(resource), JsonObject::class.java)
+
+    fun broadcast(message: Component) = Audiences.all().sendMessage(message)
+    fun broadcast(message: Component, predicate: Predicate<Player>) = Audiences.players(predicate).sendMessage(message)
 
     fun start() {
         minecraftServer.start("0.0.0.0", 25565)

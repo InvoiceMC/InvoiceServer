@@ -10,11 +10,13 @@ class PluginManager {
     @Throws(IOException::class)
     internal fun registerAllPlugins() {
         val files = File("plugins").listFiles()
-            ?.filter { file -> !file.isDirectory || file.endsWith(".jar") } ?: throw IOException("No plugins found!")
+            ?.filter { file -> !file.isDirectory || file.endsWith(".jar") }
 
-        files.forEach { file ->
-            val plugin = loadPlugin(file)
-            println("Registered plugin: ${plugin?.name}!")
+        files?.let {
+            it.forEach { file ->
+                val plugin = loadPlugin(file)
+                println("Registered plugin: ${plugin?.name}!")
+            }
         }
     }
 
