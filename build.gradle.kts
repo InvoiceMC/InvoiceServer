@@ -1,7 +1,4 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
-    id("com.github.johnrengelman.shadow") version "8.1.1"
     kotlin("jvm") version "2.0.0-RC1"
     `maven-publish`
 }
@@ -15,24 +12,17 @@ repositories {
 }
 
 dependencies {
-    implementation("net.minestom:minestom-snapshots:7320437640")
-    implementation("net.kyori:adventure-text-minimessage:4.16.0")
-    implementation("com.google.code.gson:gson:2.10.1")
+    api("net.minestom:minestom-snapshots:7320437640")
+    api("net.kyori:adventure-text-minimessage:4.16.0")
+    api("com.google.code.gson:gson:2.10.1")
 
-    implementation("org.slf4j:slf4j-api:2.0.9")
-    implementation("ch.qos.logback:logback-classic:1.5.6")
+    api("org.slf4j:slf4j-api:2.0.9")
+    api("ch.qos.logback:logback-classic:1.5.6")
 }
 
 publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = project.group.toString()
-            artifactId = project.name
-            version = project.version.toString()
-
-            from(components["java"])
-            artifact(tasks.shadowJar)
-        }
+    publications.create<MavenPublication>("maven") {
+        from(components["java"])
     }
 }
 
