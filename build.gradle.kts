@@ -31,13 +31,9 @@ publishing {
             version = project.version.toString()
 
             from(components["java"])
-            // artifact(tasks.shadowJar)
+            artifact(tasks.shadowJar)
         }
     }
-}
-
-tasks.withType<ShadowJar> {
-    archiveClassifier.set("all")
 }
 
 tasks.withType<Wrapper> {
