@@ -1,9 +1,11 @@
 plugins {
+    id("com.github.johnrengelman.shadow") version "8.1.1"
     kotlin("jvm") version "2.0.0-RC1"
+    `maven-publish`
 }
 
-group = "net.invoice"
-version = "1.0-SNAPSHOT"
+group = "org.github.invoicemc"
+version = "0.0.1"
 
 repositories {
     mavenCentral()
@@ -13,6 +15,19 @@ repositories {
 dependencies {
     implementation("net.minestom:minestom-snapshots:7320437640")
     implementation("net.kyori:adventure-text-minimessage:4.16.0")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
+}
+
+tasks.register<Wrapper>("wrapper") {
+    gradleVersion = "7.3.3"
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 kotlin {

@@ -8,11 +8,14 @@ import net.minestom.server.extras.MojangAuth
 import net.minestom.server.instance.InstanceContainer
 import net.minestom.server.instance.InstanceManager
 import net.minestom.server.instance.block.Block
+import net.minestom.server.network.packet.server.play.TeamsPacket
+import net.minestom.server.scoreboard.TeamManager
 import net.minestom.server.utils.NamespaceID
 import net.minestom.server.world.DimensionType
 import org.invoice.commands.admin.PickaxeCMD
 import org.invoice.commands.play.TestingCMD
 import org.invoice.commands.admin.GamemodeCMD
+import org.invoice.plugins.PluginManager
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -20,11 +23,15 @@ import java.util.concurrent.TimeUnit
 class InvoiceServer(val minecraftServer: MinecraftServer) {
     var instanceManager: InstanceManager = MinecraftServer.getInstanceManager()
     var eventHandler: GlobalEventHandler = MinecraftServer.getGlobalEventHandler()
+    val teamManager: TeamManager = MinecraftServer.getTeamManager()
+    val pluginManager: PluginManager = PluginManager()
+
     var instanceContainer: InstanceContainer
 
     private val chunkSavingThread: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
 
     init {
+        MinecraftServer.setBrandName("InvoiceMC (Minestom)")
         MojangAuth.init()
 
         val dimension = DimensionType.builder(NamespaceID.from("invoice:main"))
@@ -41,6 +48,7 @@ class InvoiceServer(val minecraftServer: MinecraftServer) {
         }
 
         setupCommands()
+        setupTeams()
     }
 
     private fun setupCommands() {
@@ -54,6 +62,13 @@ class InvoiceServer(val minecraftServer: MinecraftServer) {
             // Play
             TestingCMD()
         )
+    }
+
+    private fun setupTeams() {
+        teamManager.createBuilder("players")
+            .collisionRule(TeamsPacket.CollisionRule.NEVER)
+            .nameTagVisibility(TeamsPacket.NameTagVisibility.NEVER)
+            .build()
     }
 
     fun start() {
