@@ -29,17 +29,16 @@ publishing {
             version = project.version.toString()
 
             from(components["java"])
-            artifact(tasks.shadowJar)
+            artifact(tasks.shadowJar) {
+                classifier = null
+            }
         }
     }
 }
 
-
-tasks {
-    wrapper {
-        gradleVersion = "8.5"
-        distributionType = Wrapper.DistributionType.ALL
-    }
+tasks.withType<Wrapper> {
+    gradleVersion = "8.5"
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 kotlin {
