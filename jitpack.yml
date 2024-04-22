@@ -4,6 +4,3 @@ before_install:
 
 jdk:
   - openjdk21
-
-build:
-  gradle: ./gradlew :shadowJar
