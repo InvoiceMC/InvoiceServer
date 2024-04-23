@@ -1,7 +1,6 @@
 package org.invoice
 
 import net.minestom.server.MinecraftServer
-import net.minestom.server.extras.velocity.VelocityProxy
 import java.io.IOException
 
 lateinit var server: InvoiceServer
