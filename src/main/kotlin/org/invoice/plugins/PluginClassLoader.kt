@@ -2,7 +2,6 @@ package org.invoice.plugins
 
 import cc.ekblad.toml.decode
 import cc.ekblad.toml.tomlMapper
-import org.invoice.server
 import java.io.File
 import java.io.IOException
 import java.net.URLClassLoader
