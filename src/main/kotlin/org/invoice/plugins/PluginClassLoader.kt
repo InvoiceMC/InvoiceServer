@@ -1,11 +1,18 @@
 package org.invoice.plugins
 
+import cc.ekblad.toml.decode
+import cc.ekblad.toml.tomlMapper
+import org.invoice.server
 import java.io.File
 import java.io.IOException
 import java.net.URLClassLoader
 import java.util.jar.JarFile
 
-internal class PluginClassLoader private constructor(private val jar: File) {
+class PluginClassLoader private constructor(private val jar: File) {
+    private val urls = arrayOf(jar.toURI().toURL())
+    private val classLoader = URLClassLoader.newInstance(urls, javaClass.classLoader)
+    val info: PluginTOML by lazy { getPluginTOML() }
+
     companion object {
         @JvmStatic
         fun create(path: String): PluginClassLoader = create(File(path))
@@ -21,9 +28,6 @@ internal class PluginClassLoader private constructor(private val jar: File) {
         val jarFile = JarFile(jar)
         val entries = jarFile.entries()
 
-        val urls = arrayOf(jar.toURI().toURL())
-        val classLoader = URLClassLoader.newInstance(urls, javaClass.classLoader)
-
         while (entries.hasMoreElements()) {
             val entry = entries.nextElement()
             val name = entry.name
@@ -36,5 +40,13 @@ internal class PluginClassLoader private constructor(private val jar: File) {
         }
 
         return classes
+    }
+
+    private fun getPluginTOML(): PluginTOML {
+        val mapper = tomlMapper {}
+        val toml = classLoader.getResourceAsStream("plugin.toml")
+            ?: throw IOException("Failed to find plugin.toml in ${jar.name}")
+
+        return mapper.decode<PluginTOML>(toml.bufferedReader().use { it.readText() })
     }
 }
