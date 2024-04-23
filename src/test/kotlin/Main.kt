@@ -1,10 +1,10 @@
 import org.invoice.config.ConfigManager
 
 fun main() {
-    val structured = ConfigManager("src/test/resources/test.toml").Structured<TestConfig>()
-    val unstructured = ConfigManager("src/test/resources/test.toml").UnStructured()
+    val manager = ConfigManager("src/test/resources/test.toml")
+    val structured = manager.getConfig<TestConfig>()
+    val unstructured = manager.getConfig()
 
-    val unstructuredConfig = unstructured.getConfig()
-
-    println(unstructuredConfig)
+    println(structured.name)
+    println(unstructured)
 }

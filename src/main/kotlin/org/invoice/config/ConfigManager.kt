@@ -29,19 +29,13 @@ class ConfigManager (
         }
     }
 
-    inner class Structured<T: Config> {
-        inline fun <reified E: Class<T>> getConfig(): E {
-            val mapper = tomlMapper {}
-            val stream = file.inputStream()
-            return mapper.decode<E>(stream.bufferedReader().use { it.readText() })
-        }
+    fun getConfig(): Map<String, Any> {
+        return getConfig<Map<String, Any>>()
     }
 
-    inner class UnStructured {
-        fun getConfig(): Map<String, Any> {
-            val mapper = tomlMapper {}
-            val stream = file.inputStream()
-            return mapper.decode<Map<String, Any>>(stream.bufferedReader().use { it.readText() })
-        }
+    inline fun <reified T: Any> getConfig(): T {
+        val mapper = tomlMapper {}
+        val stream = file.inputStream()
+        return mapper.decode<T>(stream.bufferedReader().use { it.readText() })
     }
 }
