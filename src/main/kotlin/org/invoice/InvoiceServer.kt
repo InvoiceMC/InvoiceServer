@@ -92,13 +92,13 @@ class InvoiceServer(private val minecraftServer: MinecraftServer) {
         logger.info("Successfully registered main team!")
     }
 
-    fun getResource(resource: String): String {
+    fun getResourceAsString(resource: String): String {
         val streamResource = getResourceAsStream(resource) ?: return ""
         return streamResource.reader().readText()
     }
 
     fun getResourceAsStream(resource: String): InputStream? = javaClass.getResourceAsStream("/$resource")
-    fun getResourceAsJson(resource: String): JsonObject = gson.fromJson(getResource(resource), JsonObject::class.java)
+    fun getResourceAsJson(resource: String): JsonObject = gson.fromJson(getResourceAsString(resource), JsonObject::class.java)
 
     fun broadcast(message: Component) = Audiences.all().sendMessage(message)
     fun broadcast(message: Component, predicate: Predicate<Player>) = Audiences.players(predicate).sendMessage(message)

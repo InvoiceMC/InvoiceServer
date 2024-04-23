@@ -1,6 +1,8 @@
 package org.invoice.plugins
 
+import com.google.gson.JsonObject
 import net.kyori.adventure.text.logger.slf4j.ComponentLogger
+import org.invoice.server
 import java.io.InputStream
 
 open class Plugin {
@@ -11,5 +13,7 @@ open class Plugin {
     open fun onEnable() {}
     open fun onDisable() {}
 
-    fun getResource(resource: String): InputStream? = javaClass.getResourceAsStream(resource)
+    fun getResourceAsStream(resource: String): InputStream? = server.getResourceAsStream(resource)
+    fun getResourceAsString(resource: String): String = server.getResourceAsString(resource)
+    fun getResourceAsJson(resource: String): JsonObject = server.getResourceAsJson(resource)
 }
