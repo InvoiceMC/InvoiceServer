@@ -9,7 +9,7 @@ import net.minestom.server.entity.metadata.display.TextDisplayMeta
 class HologramEntity @JvmOverloads constructor(
     text: Component,
     scale: Vec = Vec.ONE,
-    meta: (TextDisplayMeta) -> Unit = {}
+    metaFunction: (TextDisplayMeta) -> Unit = {}
 ) : NonTickingEntity(EntityType.TEXT_DISPLAY) {
     init {
         editEntityMeta(TextDisplayMeta::class.java) { meta ->
@@ -20,7 +20,7 @@ class HologramEntity @JvmOverloads constructor(
             meta.isSeeThrough = true
             meta.backgroundColor = 0x0
 
-            meta(meta)
+            metaFunction(meta)
         }
     }
 }

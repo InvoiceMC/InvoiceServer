@@ -1,10 +1,8 @@
 package org.invoice
 
 import com.google.gson.Gson
-import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.logger.slf4j.ComponentLogger
 import net.minestom.server.MinecraftServer
 import net.minestom.server.adventure.audience.Audiences
 import net.minestom.server.command.CommandManager

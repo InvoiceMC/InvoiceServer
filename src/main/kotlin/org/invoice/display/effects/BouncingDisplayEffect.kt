@@ -3,7 +3,11 @@ package org.invoice.display.effects
 import org.invoice.display.KeyframeDisplayEffect
 import org.invoice.entities.HologramEntity
 
-class BouncingDisplayEffect(private val hologramEntity: HologramEntity, duration: Int = 5, private val minMaxY: Double = 1.0) : KeyframeDisplayEffect(hologramEntity, duration) {
+class BouncingDisplayEffect(
+    private val hologramEntity: HologramEntity,
+    duration: Int = 5,
+    private val minMaxY: Double = 1.0
+) : KeyframeDisplayEffect(hologramEntity, duration) {
     private val centerPos = hologramEntity.position
     private var isUpward: Boolean = true
 

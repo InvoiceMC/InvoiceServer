@@ -5,7 +5,7 @@ import java.io.IOException
 import java.net.URLClassLoader
 import java.util.jar.JarFile
 
-class PluginClassLoader private constructor(private val jar: File) {
+internal class PluginClassLoader private constructor(private val jar: File) {
     companion object {
         @JvmStatic
         fun create(path: String): PluginClassLoader = create(File(path))

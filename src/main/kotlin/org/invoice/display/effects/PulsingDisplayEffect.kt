@@ -6,7 +6,11 @@ import org.invoice.display.KeyframeDisplayEffect
 import org.invoice.entities.HologramEntity
 import org.invoice.reverse
 
-class PulsingDisplayEffect(private val hologramEntity: HologramEntity, duration: Int, private val minMaxScale: Vec) : KeyframeDisplayEffect(hologramEntity, duration) {
+class PulsingDisplayEffect(
+    private val hologramEntity: HologramEntity,
+    duration: Int,
+    private val minMaxScale: Vec
+) : KeyframeDisplayEffect(hologramEntity, duration) {
     private var isScalingUp = true
 
     override fun keyframe(keyframe: Int) {
