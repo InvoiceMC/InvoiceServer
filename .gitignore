@@ -20,7 +20,7 @@
 
 .gradle/
 .kotlin/
-idea/
+.idea/
 build/
 world/
 plugins/
