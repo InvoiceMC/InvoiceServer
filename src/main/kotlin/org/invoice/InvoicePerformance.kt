@@ -17,7 +17,7 @@ import kotlin.time.toDuration
 
 @Suppress("MemberVisibilityCanBePrivate")
 class InvoicePerformance {
-    private val benchmarkFormat: String = "<gray>ʀᴀᴍ: <white>%sMB/%sMB (%s) <dark_gray><b>|<reset> <gray>ᴛᴘꜱ: <white>%s <dark_gray><b>|<reset> <gray>ᴛɪᴄᴋ ᴛɪᴍᴇ: <white>%s"
+    private val benchmarkFormat: String = "<gray>ʀᴀᴍ: <white>%sMB/%sMB <dark_gray><b>(</b><white>%s<dark_gray><b>) <dark_gray><b>|<reset> <gray>ᴛᴘꜱ: <white>%s <dark_gray><b>|<reset> <gray>ᴛɪᴄᴋ ᴛɪᴍᴇ: <white>%s <dark_gray><b>(</b><gray>ᴍꜱᴘᴛ: <white>%s<dark_gray><b>)"
     private val lowTPSThreshold: Double = 15.5
 
     val tickMonitor: AtomicReference<TickMonitor> = AtomicReference()
@@ -26,7 +26,7 @@ class InvoicePerformance {
     var ramMax: Long = 0
 
     var tps: Double = 20.0
-    var tickTime: Duration = Duration.ZERO
+    var tickTime: Double = 0.0
 
     internal fun setup(server: InvoiceServer, showMessage: Boolean) {
         server.eventHandler.addListener(ServerTickMonitorEvent::class.java) { event -> tickMonitor.set(event.tickMonitor) }
@@ -45,7 +45,6 @@ class InvoicePerformance {
             tickMonitor.get()?.let {
                 tps = min(ServerFlag.SERVER_TICKS_PER_SECOND.toDouble(), floor(1000.0 / it.tickTime))
                 tickTime = MathUtils.round(it.tickTime, 2)
-                    .toDuration(DurationUnit.MILLISECONDS)
 
                 if (showMessage) {
                     Audiences.players().sendActionBar(getServerPerformance())
@@ -54,7 +53,8 @@ class InvoicePerformance {
         }.repeat(10, TimeUnit.SERVER_TICK).schedule()
     }
 
+    fun getTickTimeDuration(): Duration = tickTime.toDuration(DurationUnit.MILLISECONDS)
     fun getRamPercentage(): Float = ramUsage.toFloat() / ramMax.toFloat() * 100f
-    fun getServerPerformance(): Component = benchmarkFormat.format(ramUsage, ramMax, "${"%.2f".format(getRamPercentage())}%", tps, tickTime).mm()
+    fun getServerPerformance(): Component = benchmarkFormat.format(ramUsage, ramMax, "${"%.2f".format(getRamPercentage())}%", tps, getTickTimeDuration(), tickTime).mm()
     fun isLowTPS(): Boolean = tps <= lowTPSThreshold
 }
