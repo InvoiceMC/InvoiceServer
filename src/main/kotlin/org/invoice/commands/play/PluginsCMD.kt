@@ -13,9 +13,9 @@ class PluginsCMD : Command("plugins", "plugin", "pl") {
             val disabledPlugins = pluginManager.disabledPlugins
 
             val formattedEnabledPlugins =
-                enabledPlugins.joinToString(separator = "<white>, ", prefix = "<green>") { it.name }
+                enabledPlugins.joinToString(separator = "<white>, <green>", prefix = "<green>") { it.name }
             val formattedDisabledPlugins = disabledPlugins
-                .joinToString(separator = "<white>, ", prefix = "<red>") { it.name }
+                .joinToString(separator = "<white>, <red>", prefix = "<red>") { it.name }
 
             sender.sendMessage("<white>Enabled Plugins: $formattedEnabledPlugins".mm())
             sender.sendMessage("<white>Disabled Plugins: $formattedDisabledPlugins".mm())
