@@ -18,6 +18,8 @@ dependencies {
 
     api("org.slf4j:slf4j-api:2.0.9")
     api("ch.qos.logback:logback-classic:1.5.6")
+
+    implementation("cc.ekblad:4koma:1.2.0")
 }
 
 publishing {

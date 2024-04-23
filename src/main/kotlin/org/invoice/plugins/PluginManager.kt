@@ -24,8 +24,11 @@ class PluginManager {
                     plugin = loadPlugin(file)
                 }
 
-                plugin?.let {
-                    logger.info("Successfully registered plugin `${plugin!!.name}` in $time")
+                if (plugin == null) {
+                    logger.error("Failed to register plugin in $time")
+                    return@forEach
+                } else {
+                    logger.info("Registered plugin `${plugin!!.info.name}` in $time")
                 }
             }
         }
@@ -35,9 +38,20 @@ class PluginManager {
     @Suppress("UNCHECKED_CAST")
     private fun loadPlugin(file: File): Plugin? {
         val classLoader = PluginClassLoader.create(file)
+        val info = classLoader.info
+        val mainClass = info.mainClass
         val plugin = classLoader.registerAllClasses()
-            .first { clazz -> clazz.javaClass.isInstance(Plugin::class.java) } as Class<out Plugin> // Had to do this because List#filterIsInstance didn't work for some reason :shrug:=
+            .find { it.superclass == Plugin::class.java && it.name == mainClass } as Class<Plugin>?
+        if (plugin == null) {
+            logger.error("Failed to find main class for plugin `${info.name}`")
+            val possibleClasses = classLoader.registerAllClasses()
+                .filter { it.superclass == Plugin::class.java }
+                .map { it.name }
+            logger.error("Possible classes: $possibleClasses")
+            return null
+        }
         val pluginInstance = plugin.getConstructor().newInstance() // Which means I have to do this :(
+        pluginInstance.info = info
 
         pluginInstance.onEnable()
         loadedPlugins.add(pluginInstance)
