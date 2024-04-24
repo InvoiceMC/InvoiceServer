@@ -1,5 +1,6 @@
 package org.invoice.plugins
 
+import org.jetbrains.annotations.ApiStatus.Internal
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -14,6 +15,7 @@ class PluginManager {
     private val allPlugins: List<Plugin>
         get() = loadedPlugins + disabledPlugins
 
+    @Internal
     @Throws(IOException::class)
     internal fun registerAllPlugins() {
         val files = File("plugins").listFiles()

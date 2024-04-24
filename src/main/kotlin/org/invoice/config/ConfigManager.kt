@@ -2,10 +2,7 @@ package org.invoice.config
 
 import cc.ekblad.toml.decode
 import cc.ekblad.toml.tomlMapper
-import org.invoice.plugins.PluginTOML
 import java.io.File
-import java.io.IOException
-import java.lang.IllegalArgumentException
 
 /**
  * ConfigManager class for plugins to use.

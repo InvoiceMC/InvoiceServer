@@ -103,10 +103,6 @@ class InvoiceServer(private val minecraftServer: MinecraftServer) {
     fun broadcast(message: Component) = Audiences.all().sendMessage(message)
     fun broadcast(message: Component, predicate: Predicate<Player>) = Audiences.players(predicate).sendMessage(message)
 
-    fun start() {
-        minecraftServer.start("0.0.0.0", 25565)
-    }
-
     private fun CommandManager.registerAll(vararg commands: Command) {
         for (command in commands) { register(command) }
     }

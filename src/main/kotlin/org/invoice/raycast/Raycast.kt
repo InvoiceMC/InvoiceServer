@@ -53,8 +53,8 @@ class Raycast(val location: Pos, val settings: RaycastSettings) {
         return positions.iterator()
     }
 
-    companion object {
-        private val instance by lazy { server.instanceContainer }
+    private companion object {
+        val instance by lazy { server.instanceContainer }
 
         fun getEntityDirection(entity: LivingEntity): Vec {
             val pos = entity.position

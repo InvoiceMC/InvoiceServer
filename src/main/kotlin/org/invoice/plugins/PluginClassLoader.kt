@@ -12,7 +12,7 @@ class PluginClassLoader private constructor(private val jar: File) {
     private val classLoader = URLClassLoader.newInstance(urls, javaClass.classLoader)
     val info: PluginTOML by lazy { getPluginTOML() }
 
-    companion object {
+    internal companion object {
         @JvmStatic
         fun create(path: String): PluginClassLoader = create(File(path))
 

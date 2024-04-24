@@ -7,7 +7,6 @@ import java.io.InputStream
 
 open class Plugin {
     lateinit var info: PluginTOML
-    lateinit var loader: PluginClassLoader
     val logger: ComponentLogger by lazy { ComponentLogger.logger(info.name) }
 
     open fun onEnable() {}
