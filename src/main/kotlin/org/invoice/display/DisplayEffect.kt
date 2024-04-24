@@ -1,6 +1,6 @@
 package org.invoice.display
 
-interface DisplayEffect {
+sealed interface DisplayEffect {
     fun play()
     fun stop()
 }
