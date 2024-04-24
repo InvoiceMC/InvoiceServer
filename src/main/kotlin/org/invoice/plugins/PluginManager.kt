@@ -11,6 +11,8 @@ class PluginManager {
 
     internal val loadedPlugins: MutableList<Plugin> = ArrayList()
     internal val disabledPlugins: MutableList<Plugin> = ArrayList()
+    private val allPlugins: List<Plugin>
+        get() = loadedPlugins + disabledPlugins
 
     @Throws(IOException::class)
     internal fun registerAllPlugins() {
@@ -50,7 +52,7 @@ class PluginManager {
             logger.error("Possible classes: $possibleClasses")
             return null
         }
-        val pluginInstance = plugin.getConstructor().newInstance() // Which means I have to do this :(
+        val pluginInstance = plugin.getConstructor().newInstance()
         pluginInstance.info = info
 
         pluginInstance.onEnable()
@@ -78,5 +80,20 @@ class PluginManager {
         }
 
         return false
+    }
+
+    fun reloadPlugin(plugin: Plugin) {
+        if (loadedPlugins.contains(plugin)) {
+            plugin.onDisable()
+            plugin.onEnable()
+        }
+    }
+
+    fun getPlugin(name: String): Plugin? {
+        return allPlugins.find { it.info.name == name }
+    }
+
+    fun isEnabled(plugin: Plugin): Boolean {
+        return loadedPlugins.contains(plugin)
     }
 }
