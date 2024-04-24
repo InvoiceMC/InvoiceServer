@@ -48,21 +48,6 @@ internal class Events {
                         val username = event.player.username
                         server.broadcast("<yellow>$username has left the server.".mm())
                     }
-                    .addListener(PlayerMoveEvent::class.java) { event ->
-                        val player = event.player
-                        val pos = player.getEyeLocation()
-
-                        val entity = Entity(EntityType.BLOCK_DISPLAY)
-                        entity.editEntityMeta(BlockDisplayMeta::class.java) { meta ->
-                            meta.setBlockState(Block.RED_STAINED_GLASS.stateId().toInt())
-                            meta.scale = Vec(0.1, 5.0, 0.1)
-                        }
-                        entity.setInstance(server.instanceContainer, pos)
-
-                        MinecraftServer.getSchedulerManager().buildTask {
-                            entity.remove()
-                        }.delay(3, TimeUnit.SECOND).schedule()
-                    }
             )
         }
     }

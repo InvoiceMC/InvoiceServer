@@ -15,4 +15,5 @@ fun String.mm(vararg tags: TagResolver) = miniMessage.deserialize(this, *tags)
 fun Vec.reverse(): Vec = Vec(-x, -y, -z)
 fun Vec.toPos(): Pos = Pos(x, y, z)
 
-fun Player.getEyeLocation(): Pos = position.add(0.0, eyeHeight, 0.0)
+val Player.eyePosition: Pos
+    get() = position.add(0.0, eyeHeight, 0.0)

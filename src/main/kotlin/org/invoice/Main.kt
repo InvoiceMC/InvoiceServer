@@ -13,7 +13,7 @@ fun main() {
     server = InvoiceServer(minecraftServer)
     server.start()
 
-    VelocityProxy.enable("secret")
+    // VelocityProxy.enable("kVcL0dfPl65u")
 
     // Register all default events
     Events.setup()
