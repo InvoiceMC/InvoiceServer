@@ -12,7 +12,9 @@ class BouncingDisplayEffect(
     private var isUpward: Boolean = true
 
     override fun keyframe(keyframe: Int) {
-        hologramEntity.teleport(centerPos.add(0.0, if (isUpward) minMaxY else -minMaxY, 0.0))
+        val deltaY = if (isUpward) minMaxY else -minMaxY
+
+        hologramEntity.teleport(centerPos.add(0.0, deltaY, 0.0))
         isUpward = !isUpward
     }
 }

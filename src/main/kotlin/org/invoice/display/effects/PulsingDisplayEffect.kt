@@ -14,9 +14,9 @@ class PulsingDisplayEffect(
     private var isScalingUp = true
 
     override fun keyframe(keyframe: Int) {
-        hologramEntity.editEntityMeta(TextDisplayMeta::class.java) { meta ->
-            meta.scale = if (isScalingUp) minMaxScale else minMaxScale.reverse()
-        }
+        val deltaScale = if (isScalingUp) minMaxScale else minMaxScale.reverse()
+
+        hologramEntity.editEntityMeta(TextDisplayMeta::class.java) { meta -> meta.scale = deltaScale }
         isScalingUp = !isScalingUp
     }
 }
