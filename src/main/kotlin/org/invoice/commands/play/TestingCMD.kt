@@ -9,7 +9,7 @@ import org.invoice.entities.HologramEntity
 import org.invoice.mm
 import org.invoice.server
 
-class TestingCMD : Command("testing") {
+internal class TestingCMD : Command("testing") {
     init {
         setDefaultExecutor { sender, _ ->
             if (sender is Player) {

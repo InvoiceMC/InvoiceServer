@@ -9,7 +9,7 @@ import net.minestom.server.entity.metadata.display.TextDisplayMeta
 class HologramEntity @JvmOverloads constructor(
     text: Component,
     scale: Vec = Vec.ONE,
-    billboardConstraint: BillboardConstraints,
+    billboardConstraint: BillboardConstraints = BillboardConstraints.CENTER,
     metaFunction: (TextDisplayMeta) -> Unit = {}
 ) : NonTickingEntity(EntityType.TEXT_DISPLAY) {
     init {

@@ -13,7 +13,7 @@ import kotlin.time.measureTime
  * ```
  * /plugin <info|enable|disable|reload> <pluginName>
  */
-class PluginsCMD : Command("plugins", "plugin", "pl") {
+internal class PluginsCMD : Command("plugins", "plugin", "pl") {
     private val pluginManager
         get() = server.pluginManager
 

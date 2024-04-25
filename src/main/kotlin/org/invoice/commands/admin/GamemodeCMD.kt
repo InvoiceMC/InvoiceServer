@@ -9,8 +9,7 @@ import net.minestom.server.entity.Player
 import net.minestom.server.utils.entity.EntityFinder
 import org.invoice.mm
 
-
-class GamemodeCMD : Command("gamemode", "gm") {
+internal class GamemodeCMD : Command("gamemode", "gm") {
     init {
         val gamemode: ArgumentEnum<GameMode> = ArgumentType.Enum("gamemode", GameMode::class.java)
             .setFormat(ArgumentEnum.Format.LOWER_CASED)

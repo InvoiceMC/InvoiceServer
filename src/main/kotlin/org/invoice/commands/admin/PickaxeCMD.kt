@@ -10,7 +10,7 @@ import net.minestom.server.item.ItemStack
 import net.minestom.server.item.Material
 import org.invoice.mm
 
-class PickaxeCMD : Command("pickaxe") {
+internal class PickaxeCMD : Command("pickaxe") {
     init {
         setDefaultExecutor { sender, _ ->
             if (sender !is Player) return@setDefaultExecutor
