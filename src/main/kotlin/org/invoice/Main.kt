@@ -3,13 +3,13 @@ package org.invoice
 import net.minestom.server.MinecraftServer
 import java.io.IOException
 
-lateinit var server: InvoiceServer
+internal lateinit var server: InvoiceServer
 
 @Throws(IOException::class)
 fun main() {
     // Create server object
     val minecraftServer = MinecraftServer.init()
-    server = InvoiceServer(minecraftServer)
+    server = InvoiceServer()
 
     // VelocityProxy.enable("kVcL0dfPl65u")
 
@@ -19,5 +19,6 @@ fun main() {
     // Register all plugins
     server.pluginManager.registerAllPlugins()
 
+    // Start the server
     minecraftServer.start("0.0.0.0", 25565)
 }

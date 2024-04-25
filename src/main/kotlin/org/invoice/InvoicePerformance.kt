@@ -29,7 +29,7 @@ class InvoicePerformance {
     var tickTime: Double = 0.0
 
     internal fun setup(server: InvoiceServer, showMessage: Boolean) {
-        server.eventHandler.addListener(ServerTickMonitorEvent::class.java) { event -> tickMonitor.set(event.tickMonitor) }
+        MinecraftServer.getGlobalEventHandler().addListener(ServerTickMonitorEvent::class.java) { event -> tickMonitor.set(event.tickMonitor) }
         setupBenchmark(showMessage)
     }
 

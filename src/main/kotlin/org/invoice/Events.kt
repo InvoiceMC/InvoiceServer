@@ -1,5 +1,6 @@
 package org.invoice
 
+import net.minestom.server.MinecraftServer
 import net.minestom.server.coordinate.Pos
 import net.minestom.server.entity.GameMode
 import net.minestom.server.event.EventNode
@@ -11,7 +12,7 @@ import org.jetbrains.annotations.ApiStatus.Internal
 @Internal
 internal class Events {
     init {
-        server.eventHandler.addChild(
+        MinecraftServer.getGlobalEventHandler().addChild(
             EventNode.all("player")
                 .addListener(ServerListPingEvent::class.java) { event ->
                     val response = event.responseData
@@ -25,7 +26,6 @@ internal class Events {
 
                     player.respawnPoint = Pos(0.0, 42.0, 0.0)
                     player.gameMode = GameMode.CREATIVE
-                    player.team = server.teamManager.getTeam("players")
 
                     server.broadcast("<yellow>${player.username} has joined the server.".mm())
                 }

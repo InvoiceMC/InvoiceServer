@@ -30,41 +30,45 @@ import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 import java.util.function.Predicate
 
-class InvoiceServer(private val minecraftServer: MinecraftServer) {
+internal class InvoiceServer {
     private val logger: Logger = LoggerFactory.getLogger(MinecraftServer::class.java)
+    private val performanceManager: InvoicePerformance = InvoicePerformance()
+    private val gson: Gson = Gson()
 
-    var instanceManager: InstanceManager = MinecraftServer.getInstanceManager()
-    var eventHandler: GlobalEventHandler = MinecraftServer.getGlobalEventHandler()
-    val teamManager: TeamManager = MinecraftServer.getTeamManager()
-
-    val gson: Gson = Gson()
     val pluginManager: PluginManager = PluginManager()
-    val performanceManager: InvoicePerformance = InvoicePerformance()
-
     var instanceContainer: InstanceContainer
 
     private val chunkSavingThread: ScheduledExecutorService = Executors.newSingleThreadScheduledExecutor()
 
     init {
+        // Setup brandName and turn Online Mode on
         MinecraftServer.setBrandName("InvoiceMC (Minestom)")
         MojangAuth.init()
 
+        // Set up the dimension (for ambient light)
         val dimension = DimensionType.builder(NamespaceID.from("invoice:main"))
             .ambientLight(1f)
             .build()
-
         MinecraftServer.getDimensionTypeManager().addDimension(dimension)
-        instanceContainer = instanceManager.createInstanceContainer(dimension)
+
+        // Set the instance to a new instance with the created dimension
+        instanceContainer = MinecraftServer.getInstanceManager().createInstanceContainer(dimension)
+
+        // Set up InvoicePerformance to get active server stats
         performanceManager.setup(this, true)
 
-        chunkSavingThread.scheduleAtFixedRate({ instanceContainer.saveChunksToStorage() }, 20, 20, TimeUnit.SECONDS)
+        // Setup chunk saving
+        chunkSavingThread.scheduleAtFixedRate({ instanceContainer.saveChunksToStorage() }, 5, 5, TimeUnit.MINUTES)
+        Runtime.getRuntime().addShutdownHook(Thread {
+            instanceContainer.saveChunksToStorage()
+        })
 
         instanceContainer.setGenerator { unit ->
             unit.modifier().fillHeight(39, 40, Block.STONE)
         }
 
+        // Setup commands
         setupCommands()
-        setupTeams()
     }
 
     private fun setupCommands() {
@@ -81,15 +85,6 @@ class InvoiceServer(private val minecraftServer: MinecraftServer) {
         )
 
         logger.info("Successfully registered all Commands!")
-    }
-
-    private fun setupTeams() {
-        teamManager.createBuilder("players")
-            .collisionRule(TeamsPacket.CollisionRule.NEVER)
-            .nameTagVisibility(TeamsPacket.NameTagVisibility.NEVER)
-            .build()
-
-        logger.info("Successfully registered main team!")
     }
 
     fun getResourceAsString(resource: String): String {
