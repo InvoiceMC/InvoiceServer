@@ -6,6 +6,14 @@ import org.invoice.display.KeyframeDisplayEffect
 import org.invoice.entities.HologramEntity
 import org.invoice.reverse
 
+/**
+ * This effect will make the [HologramEntity] scale up and down.
+ *
+ * @see HologramEntity
+ * @see KeyframeDisplayEffect
+ * @since 0.0.1
+ * @author Outspending
+ */
 class PulsingDisplayEffect(
     private val hologramEntity: HologramEntity,
     duration: Int,

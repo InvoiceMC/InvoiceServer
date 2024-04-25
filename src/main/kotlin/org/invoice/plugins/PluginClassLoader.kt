@@ -20,6 +20,13 @@ class PluginClassLoader private constructor(private val jar: File) {
         fun create(file: File): PluginClassLoader = PluginClassLoader(file)
     }
 
+    /**
+     * This method loads all classes from a jar file into the JVM.
+     * This is used for registering classes for a plugin.
+     *
+     * @since 0.0.1
+     * @author Outspending
+     */
     @Throws(IOException::class, ClassNotFoundException::class)
     internal fun registerAllClasses(): List<Class<*>> {
         val classes: MutableList<Class<*>> = mutableListOf()

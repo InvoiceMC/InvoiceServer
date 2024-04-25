@@ -3,6 +3,16 @@ package org.invoice.display.effects
 import org.invoice.display.KeyframeDisplayEffect
 import org.invoice.entities.HologramEntity
 
+/**
+ * Gives a [HologramEntity] a bouncing effect, moving it up and down.
+ *
+ * The translation of the Display Entity will give it a smooth effect.
+ *
+ * @see HologramEntity
+ * @see KeyframeDisplayEffect
+ * @since 0.0.1
+ * @author Outspending
+ */
 class BouncingDisplayEffect(
     private val hologramEntity: HologramEntity,
     duration: Int = 5,

@@ -55,7 +55,7 @@ internal class InvoiceServer {
         instanceContainer = MinecraftServer.getInstanceManager().createInstanceContainer(dimension)
 
         // Set up InvoicePerformance to get active server stats
-        performanceManager.setup(this, true)
+        performanceManager.setup(true)
 
         // Setup chunk saving
         chunkSavingThread.scheduleAtFixedRate({ instanceContainer.saveChunksToStorage() }, 5, 5, TimeUnit.MINUTES)

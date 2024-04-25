@@ -45,22 +45,20 @@ class PluginManager {
         val info = classLoader.info
         val mainClass = info.mainClass
         val plugin = classLoader.registerAllClasses()
-            .find { it.superclass == Plugin::class.java && it.name == mainClass } as Class<Plugin>?
-        if (plugin == null) {
+            .find { it.name == mainClass && it.superclass == Plugin::class.java } as Class<Plugin>?
+
+        return if (plugin == null) {
             logger.error("Failed to find main class for plugin `${info.name}`")
-            val possibleClasses = classLoader.registerAllClasses()
-                .filter { it.superclass == Plugin::class.java }
-                .map { it.name }
-            logger.error("Possible classes: $possibleClasses")
-            return null
+            null
+        } else {
+            val pluginInstance = plugin.getConstructor().newInstance()
+            pluginInstance.info = info
+
+            pluginInstance.onEnable()
+            loadedPlugins.add(pluginInstance)
+
+            pluginInstance
         }
-        val pluginInstance = plugin.getConstructor().newInstance()
-        pluginInstance.info = info
-
-        pluginInstance.onEnable()
-        loadedPlugins.add(pluginInstance)
-
-        return pluginInstance
     }
 
     fun loadPlugin(plugin: Plugin) {
@@ -71,7 +69,7 @@ class PluginManager {
             plugin.onEnable()
         }
     }
-    
+
     fun disablePlugin(plugin: Plugin): Boolean {
         if (loadedPlugins.contains(plugin)) {
             plugin.onDisable()
